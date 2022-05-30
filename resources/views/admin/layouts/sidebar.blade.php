@@ -49,7 +49,7 @@
                           
                             
                               <li  class="active" >
-                                <a class="sidenav-item-link" href="index.html">
+                                <a class="sidenav-item-link" href="{{ route('home') }}">
                                   <span class="nav-text">Home</span>
                                   
                                 </a>
@@ -65,13 +65,36 @@
                   
   
                   
-                    <li  class="has-sub" >
-                      <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#ui-elements"
-                        aria-expanded="false" aria-controls="ui-elements">
-                        <i class="mdi mdi-folder-multiple-outline"></i>
+                    <li  class="has-sub active expand" >
+                      <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#banner"
+                        aria-expanded="false" aria-controls="banner">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="nav-text">Banner</span> <b class="caret"></b>
                       </a>
-                      
+                      <ul  class="collapse show"  id="banner"
+                        data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                          
+                          
+                            
+                              <li  class="active" >
+                                <a class="sidenav-item-link" href="{{ route('banner.index') }}">
+                                  <span class="nav-text">All banners</span>
+                                  
+                                </a>
+                              </li>
+
+                              <li  class="active" >
+                                <a class="sidenav-item-link" href="{{ route('banner.create') }}">
+                                  <span class="nav-text">Create banners</span>
+                                  
+                                </a>
+                              </li>
+                            
+            
+                          
+                        </div>
+                      </ul>
                     </li>
                   
   
