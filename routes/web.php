@@ -28,5 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
     Route::resource('/banner', BannerController::class);
+    Route::get('status/banner/{id}', [BannerController::class, 'Status']);
+    Route::get('show/banner/{id}', [BannerController::class, 'show']);
 
 });

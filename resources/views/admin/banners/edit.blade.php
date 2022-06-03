@@ -7,16 +7,16 @@
                 <div class="card card-default">
                 
                     <div class="card-header card-header-border-bottom">
-                        <h2>Add Banner</h2>
+                        <h2>Update Banner</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('banner.store') }}">
+                        <form method="POST" action="">
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
                                     <label for="validationServer01">Title</label>
                                     <input type="text" name="title" class="form-control" id="validationServer01"
-                                        placeholder="Banner title..." value="{{ old('title') }}">
+                                        placeholder="Banner title..." value="{{ $banner->title }}">
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -26,7 +26,7 @@
 
                                     <!-- Textarea 2 rows height -->
                                     <div class="form-outline">
-                                        <textarea value="{{ old('description') }}" name="description" class="form-control" id="textAreaExample3" rows="2"></textarea>
+                                        <textarea value="" name="description" class="form-control" id="textAreaExample3" rows="2">{{ $banner->description }}</textarea>
                                     </div>
                                     <div class="valid-feedback">
                                         Looks good!
@@ -37,23 +37,20 @@
                                     <label for="validationServer04">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">--status--</option>
-                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                        <option value="active" {{ $banner->status == 'active' ? 'selected' : '' }}>Active</option>
+                                        <option value="inactive" {{ $banner->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                                       </select>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid Status.
-                                    </div>
+                                  
                                 </div>
+                                
                                 <div class="col-md-12 mb-3">
                                     <label for="validationServer05">Condition</label>
                                     <select name="condition" class="form-control">
                                         <option value="">--condition--</option>
-                                        <option value="banner" {{ old('condition') == 'banner' ? 'selected' : '' }}>Banner</option>
-                                        <option value="promo" {{ old('condition') == 'promo' ? 'selected' : '' }}>Promotional</option>
+                                        <option value="banner" {{ $banner->condition == 'banner' ? 'selected' : '' }}>Banner</option>
+                                        <option value="promo" {{ $banner->condition == 'promo' ? 'selected' : '' }}>Promotional</option>
                                       </select>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid Condition.
-                                    </div>
+                                 
                                 </div>
                               
                             </div>

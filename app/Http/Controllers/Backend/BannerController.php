@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -14,7 +15,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return view('admin.banners.index');
+        $banners = Banner::orderBy('id', 'DESC')->get();
+        return view('admin.banners.index', compact('banners'));
     }
 
     /**
@@ -34,8 +36,49 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $this->validate($request, [
+            'title' => 'string|required',
+            'description' => 'string|nullable',
+            'photo' => 'required',
+            'condition' => 'nullable|in:banner,promo',
+            'status' => 'nullable|in:active,inactive'
+        ]);
+
+        $data = $request->all();
+        $slug = time() . '-' .$request->input('title');
+
+        $data['slug']=$slug;
+        $status = Banner::create($data);
+
+        if($status){
+            $notifiction = array(
+                'message' => 'Banner Inserted SuccessFully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('banner.index')->with($notifiction);
+        }else{
+            $notifiction = array(
+                'message' => 'Something went wrong',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notifiction);
+        }
+    }
+
+    public function Status($id){
+        $banner = Banner::find($id);
+        if($banner->status == 'active'){
+            $banner->status = 'inactive';
+        }else{
+            $banner->status = 'active';
+        }
+        $banner->update();
+        $notifiction = array(
+            'message' => 'Banner Status changed',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notifiction);
     }
 
     /**
@@ -46,7 +89,8 @@ class BannerController extends Controller
      */
     public function show($id)
     {
-        //
+        $banner = Banner::find($id);
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
