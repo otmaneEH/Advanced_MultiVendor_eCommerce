@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
          $this->call(UsersTableSeeder::class);
          // INSERT 50 FAKER DATA
          \App\Models\User::factory(50)->create();
+         \App\Models\Category::factory(50)->create();
     }
 }

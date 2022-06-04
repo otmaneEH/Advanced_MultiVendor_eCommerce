@@ -37,7 +37,7 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {   
-        $this->validate($request, [
+        $request->validate([
             'title' => 'string|required',
             'description' => 'string|nullable',
             'photo' => 'required',
@@ -46,40 +46,18 @@ class BannerController extends Controller
         ]);
 
         $data = $request->all();
-        $slug = time() . '-' .$request->input('title');
 
-        $data['slug']=$slug;
-        $status = Banner::create($data);
+        $data['slug'] = time() . '-' .$request->input('title');
 
-        if($status){
-            $notifiction = array(
-                'message' => 'Banner Inserted SuccessFully',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('banner.index')->with($notifiction);
-        }else{
-            $notifiction = array(
-                'message' => 'Something went wrong',
-                'alert-type' => 'error'
-            );
-            return redirect()->back()->with($notifiction);
-        }
-    }
+        Banner::create($data);
 
-    public function Status($id){
-        $banner = Banner::find($id);
-        if($banner->status == 'active'){
-            $banner->status = 'inactive';
-        }else{
-            $banner->status = 'active';
-        }
-        $banner->update();
         $notifiction = array(
-            'message' => 'Banner Status changed',
+            'message' => 'Banner Inserted SuccessFully',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with($notifiction);
+        return redirect()->route('banner.index')->with($notifiction);
     }
+
 
     /**
      * Display the specified resource.
@@ -99,21 +77,29 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function update(Request $request , $id)
     {
-        //
-    }
+       $banner =  Banner::findOrFail($id);
+       
+       $request->validate([
+            'title' => 'string|required',
+            'description' => 'string|nullable',
+            'photo' => 'required',
+            'condition' => 'nullable|in:banner,promo',
+            'status' => 'nullable|in:active,inactive'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $data = $request->all();
+
+        $data['slug'] = time() . '-' .$request->input('title');
+
+        $banner->update($data);
+
+        $notifiction = array(
+            'message' => 'Banner Updated SuccessFully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('banner.index')->with($notifiction);
     }
 
     /**
@@ -124,6 +110,13 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+        $banner->delete();
+        $notifiction = array(
+                'message' => 'banner deleted successfully',
+                'alert-type' => 'error'
+        );
+
+        return redirect()->back()->with($notifiction);
     }
 }

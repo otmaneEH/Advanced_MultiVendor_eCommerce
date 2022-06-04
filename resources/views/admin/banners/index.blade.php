@@ -58,22 +58,17 @@
                                             </td>
                                             <td>
                                                 @if ($banner->status == 'active')
-                                                <a href="{{ url('admin/status/banner/'.$banner->id) }}"
-                                                    class="btn btn-danger"><i
-                                                        class="fa fa-arrow-down"></i>InActive</a>
-                                            @else
-                                                <a href="{{ url('admin/status/banner/'.$banner->id) }}"
-                                                    class="btn btn-success"><i
-                                                        class="fa fa-arrow-up"></i>Active</a>
-                                            @endif
+                                                    <span class="badge badge-success">{{ $banner->status }}</span>
+                                                @else
+                                                    <span class="badge badge-primary">{{ $banner->status }}</span>
+                                                @endif
 
                                             </td>
                                             <td>
-                                                <a href="{{ url('admin/show/banner/'.$banner->id) }}"
+                                                <a href="{{ url('admin/show/banner/' . $banner->id) }}"
                                                     class="btn btn-warning">edit</a>
 
-                                                <a href="" class="btn btn-danger"
-                                                     title='Delete Data'>delete</a>
+                                                <a id="delete" href="{{ route('banner.destroy' , $banner->id) }}" class="btn btn-danger">delete</a>
                                             </td>
                                         </tr>
                                     @endforeach

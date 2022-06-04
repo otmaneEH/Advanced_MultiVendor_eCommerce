@@ -5,16 +5,6 @@ use App\Http\Controllers\Backend\BannerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,10 +15,12 @@ Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// banner routes
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
     Route::resource('/banner', BannerController::class);
-    Route::get('status/banner/{id}', [BannerController::class, 'Status']);
     Route::get('show/banner/{id}', [BannerController::class, 'show']);
-
+    Route::get('/delete/banner/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+    Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
+    Route::post('/banner/update/{id}', [BannerController::class, 'update'])->name('banner.update');
 });

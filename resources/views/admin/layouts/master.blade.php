@@ -41,6 +41,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
     <script src="assets/plugins/nprogress/nprogress.js"></script>
+
 </head>
 
 
@@ -67,7 +68,7 @@
 
 
             <div class="content-wrapper">
-                
+
                 @yield('admin_content')
 
 
@@ -75,7 +76,7 @@
 
             </div>
 
-           @include('admin.layouts.footer')
+            @include('admin.layouts.footer')
 
         </div>
     </div>
@@ -104,31 +105,58 @@
 
     @yield('scripts')
 
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Configure Toaster alarts-->
 
-    @if(Session::has('message'))
-    <script>
-        var type = "{{Session::get('alert-type', 'info')}}"
-        switch (type) {
-            case 'info':
-                toastr.info("{{ Session::get('message') }}");
-                break;
-            case 'success':
-                toastr.success("{{ Session::get('message') }}");
-                break;
-            case 'warning':
-                toastr.warning("{{ Session::get('message') }}");
-                break;
-            case 'error':
-                toastr.error("{{ Session::get('message') }}");
-                break;
-        }
-    </script>
+    @if (Session::has('message'))
+        <script>
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
+            }
+        </script>
     @endif
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('click', '#delete', function(e) {
+                e.preventDefault();
+                var link = $(this).attr('href');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = link
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
+        });
+    </script>
 
 
 </body>

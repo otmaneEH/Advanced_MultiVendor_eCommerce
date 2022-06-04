@@ -15,7 +15,7 @@
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
                                     <label for="validationServer01">Title</label>
-                                    <input type="text" name="title" class="form-control" id="validationServer01"
+                                    <input required type="text" name="title" class="form-control" id="validationServer01"
                                         placeholder="Banner title..." value="{{ old('title') }}">
                                     <div class="valid-feedback">
                                         Looks good!
@@ -26,7 +26,7 @@
 
                                     <!-- Textarea 2 rows height -->
                                     <div class="form-outline">
-                                        <textarea value="{{ old('description') }}" name="description" class="form-control" id="textAreaExample3" rows="2"></textarea>
+                                        <textarea required value="{{ old('description') }}" name="description" class="form-control" id="textAreaExample3" rows="2"></textarea>
                                     </div>
                                     <div class="valid-feedback">
                                         Looks good!
@@ -35,7 +35,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <label for="validationServer04">Status</label>
-                                    <select name="status" class="form-control">
+                                    <select name="status" class="form-control" required>
                                         <option value="">--status--</option>
                                         <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
                                         <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationServer05">Condition</label>
-                                    <select name="condition" class="form-control">
+                                    <select name="condition" class="form-control" required>
                                         <option value="">--condition--</option>
                                         <option value="banner" {{ old('condition') == 'banner' ? 'selected' : '' }}>Banner</option>
                                         <option value="promo" {{ old('condition') == 'promo' ? 'selected' : '' }}>Promotional</option>
@@ -68,7 +68,7 @@
                                                 <i class="fa fa-picture-o"></i> Choose
                                               </a>
                                             </span>
-                                            <input id="thumbnail" class="form-control" type="text" name="photo">
+                                            <input id="thumbnail" class="form-control" type="text" name="photo" required>
                                           </div>
                                           <div id="holder" style="margin-top:15px;max-height:100px;"></div>
 
